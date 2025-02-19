@@ -1,0 +1,59 @@
+DEFINE QLOCAL('ADHOC.ORDER.CONFIRM') +
+       DEFPSIST(YES) +
+       DESCR('DUMMY QUEUE') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('AMQ.MQEXPLORER.67A8D7B420003504') +
+       DEFPSIST(NO) +
+       DESCR(' ') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('AMQ.MQEXPLORER.67A8D7B4201CDE45') +
+       DEFPSIST(NO) +
+       DESCR(' ') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('AMQ.MSGEUU32112.PUB') +
+       DEFPSIST(NO) +
+       DESCR('Publish queue for AMQ events') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('AMQ.PCF.CHANNELS') +
+       DEFPSIST(NO) +
+       DESCR(' ') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('AMQ.PCF.MQCMDS') +
+       DEFPSIST(NO) +
+       DESCR(' ') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('ETA.IFDS.FRONTIER.MT103') +
+       DEFPSIST(YES) +
+       DESCR('RDE - RDM for MT 103') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('ETA.IFDS.FRONTIER.MT202') +
+       DEFPSIST(YES) +
+       DESCR('RDE - RDM for MT 103 and MT 202') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('ETA.SSB.IFDSHUB.IN') +
+       DEFPSIST(YES) +
+       DESCR('Que to receive messages from SSB') +
+       DISTL(NO) +
+       MAXDEPTH(5000)
+
+DEFINE QLOCAL('SYSTEM.ADMIN.COMMAND.QUEUE') +
+       DEFPSIST(NO) +
+       DESCR('WebSphere MQ Administration Command Queue') +
+       DISTL(NO) +
+       MAXDEPTH(3000)
