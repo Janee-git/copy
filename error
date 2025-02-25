@@ -1,0 +1,53 @@
+AMQ5534E: User ID 'mqm' authentication failed
+
+EXPLANATION:
+The user ID and password supplied by the 'MQ Explorer 8.0.0' program could not
+be authenticated.
+Additional information: 'Pipe returned 2035 [FAILED]'.
+ACTION:
+Ensure that the correct user ID and password are provided by the application.
+Ensure that the authentication repository is correctly configured. Look at
+previous error messages for any additional information. If  MQ was installed
+using the unzip mechanism, you must not set the authentication method option
+for your configured CONNAUTH object to "OS"
+----- amqzfuca.c : 4932 -------------------------------------------------------
+02/24/2025 08:21:04 PM - Process(1134159.21) User(mqm) Program(amqzlaa0)
+                    Host(wmqeuu3.prod) Installation(Installation1)
+                    VRMF(9.4.0.0) QMgr(IFDSEUUQ2)
+                    Time(2025-02-25T01:21:04.423Z)
+                    CommentInsert1(mqm)
+                    CommentInsert2(SYSTEM.DEFAULT.AUTHINFO.IDPWOS)
+                    CommentInsert3(CHCKCLNT(REQDADM))
+
+AMQ5542I: The failed authentication check was caused by the queue manager
+CONNAUTH CHCKCLNT(REQDADM) configuration.
+
+EXPLANATION:
+The user ID 'mqm' and its password were checked because the queue manager
+connection authority (CONNAUTH) configuration refers to an authentication
+information (AUTHINFO) object named 'SYSTEM.DEFAULT.AUTHINFO.IDPWOS' with
+CHCKCLNT(REQDADM).
+
+This message accompanies a previous error to clarify the reason for the user ID
+and password check.
+ACTION:
+Refer to the previous error for more information.
+
+Ensure that a password is specified by the client application and that the
+password is correct for the user ID. The authentication configuration of the
+queue manager connection determines the user ID repository. For example, the
+local operating system user database or an LDAP server.
+
+Note that if the authentication configuration specifies an LDAP user
+repository, a CHCKCLNT value of REQADM is treated as equivalent to a value of
+OPTIONAL.
+
+If the CHCKCLNT setting is OPTIONAL, the authentication check can be avoided by
+not passing a user ID across the channel. For example, by omitting the MQCSP
+structure from the client MQCONNX API call.
+
+To avoid the authentication check, you can amend the authentication
+configuration of the queue manager connection, but you should generally not
+allow unauthenticated remote access.
+----- amqzfuca.c : 4955 -------------------------------------------------------
+
