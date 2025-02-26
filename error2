@@ -1,0 +1,55 @@
+dropped privs to tcpdump
+tcpdump: listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes
+22:07:34.661626  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 68: (tos 0x34, ttl 124, id 59391, offset 0, flags [DF], proto TCP (6), length 52)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [S], cksum 0xf3be (correct), seq 1141292933, win 32768, options [mss 1356,nop,wscale 0,nop,nop,sackOK], length 0
+E4.4..@.|..*..b...5.....D..................L........
+22:07:34.661648 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 68: (tos 0x0, ttl 64, id 0, offset 0, flags [DF], proto TCP (6), length 52)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [S.], cksum 0x058d (incorrect -> 0x13f1), seq 3234475123, ack 1141292934, win 29200, options [mss 1460,nop,nop,sackOK,nop,wscale 7], length 0
+E..4..@.@.5^..5...b.......,sD.....r.................
+22:07:34.703375  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 62: (tos 0x34, ttl 124, id 59392, offset 0, flags [DF], proto TCP (6), length 40)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [.], cksum 0x46d3 (correct), seq 1, ack 1, win 32768, length 0
+E4.(..@.|..5..b...5.....D.....,tP...F.........
+22:07:34.703726  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 324: (tos 0x34, ttl 124, id 59393, offset 0, flags [DF], proto TCP (6), length 308)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [P.], cksum 0x4018 (correct), seq 1:269, ack 1, win 32768, length 268
+E4.4..@.|..(..b...5.....D.....,tP...@...TSH ......1.................ID  .&...........@......ADMIN.CHANNEL       Q...IFDSEUUQ2                                       ...................................
+................MQJB08000005CANNED_DATA                                     .....................8..7\^1.mu.
+22:07:34.703736 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 56: (tos 0x0, ttl 64, id 27968, offset 0, flags [DF], proto TCP (6), length 40)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [.], cksum 0x0581 (incorrect -> 0xc4da), seq 1, ack 269, win 237, length 0
+E..(m@@.@..)..5...b.......,tD...P.......
+22:07:34.705216 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 324: (tos 0x0, ttl 64, id 27969, offset 0, flags [DF], proto TCP (6), length 308)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [P.], cksum 0x068d (incorrect -> 0x4003), seq 1:269, ack 269, win 237, length 268
+E..4mA@.@.....5...b.......,tD...P.......TSH ........................ID  .&............@.....ADMIN.CHANNEL       Q...IFDSEUUQ2                                       ,...............................
+.......S,..........MQMM09040000IFDSEUUQ2_2025-02-24_21.17.03                   ......................1....K5-q.
+22:07:34.735759  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 332: (tos 0x34, ttl 124, id 59394, offset 0, flags [DF], proto TCP (6), length 316)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [P.], cksum 0x2568 (correct), seq 269:545, ack 269, win 32500, length 276
+E4.<..@.|.....b...5.....D.....-.P.~.%h..TSHM..............1.................ID  .&............@.....ADMIN.CHANNEL       Q...IFDSEUUQ2                                       ,...............................
+...................MQJB08000005IFDSEUUQ2_2025-02-24_21.17.03                   .....................8..7\^1.mu.
+22:07:34.735905 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 332: (tos 0x0, ttl 64, id 27970, offset 0, flags [DF], proto TCP (6), length 316)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [P.], cksum 0x0695 (incorrect -> 0x2f38), seq 269:545, ack 545, win 245, length 276
+E..<mB@.@.....5...b.......-.D...P.......TSHM........................".......ID  .&............@.....ADMIN.CHANNEL       Q...IFDSEUUQ2                                       ,...............................
+.......S,..........MQMM09040000IFDSEUUQ2_2025-02-24_21.17.03                   ......................1....K5-q.
+22:07:34.758064  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 224: (tos 0x34, ttl 124, id 59395, offset 0, flags [DF], proto TCP (6), length 208)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [P.], cksum 0x0274 (correct), seq 545:713, ack 545, win 32224, length 168
+E4....@.|.....b...5.....D.......P.}..t..TSHM..............0.................UID MQM         Ifds2468    mqm                                                             ........................................
+22:07:34.758076  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 368: (tos 0x34, ttl 124, id 59396, offset 0, flags [DF], proto TCP (6), length 352)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [P.], cksum 0xc5c3 (correct), seq 713:1025, ack 545, win 32224, length 312
+E4.`..@.|.....b...5.....D..N....P.}.....TSHM...8..........0....................8............IFDSEUUQ2                                       MQ Explorer 8.0.0           ............................................FCNO........................................................................................................................................
+22:07:34.758222 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 56: (tos 0x0, ttl 64, id 27971, offset 0, flags [DF], proto TCP (6), length 40)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [.], cksum 0x0581 (incorrect -> 0xbfad), seq 545, ack 1025, win 262, length 0
+E..(mC@.@..&..5...b.........D...P.......
+22:07:35.763311 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 440: (tos 0x0, ttl 64, id 27972, offset 0, flags [DF], proto TCP (6), length 424)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [P.], cksum 0x0701 (incorrect -> 0x4b7e), seq 545:929, ack 1025, win 262, length 384
+E...mD@.@.....5...b.........D...P.......TSHM..............0....................x............IFDSEUUQ2                                       MQ Explorer 8.0.0           ............................................FCNO................................................................................................................................................................................................................
+22:07:35.848308  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 104: (tos 0x34, ttl 124, id 59397, offset 0, flags [DF], proto TCP (6), length 88)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [P.], cksum 0xa7c2 (correct), seq 1025:1073, ack 929, win 31840, length 48
+E4.X..@.|.....b...5.....D.....0.P.|`....TSHC...0..0.....................................
+22:07:35.848519  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 62: (tos 0x34, ttl 124, id 59398, offset 0, flags [DF], proto TCP (6), length 40)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [F.], cksum 0x42a2 (correct), seq 1073, ack 929, win 31840, length 0
+E4.(..@.|../..b...5.....D.....0.P.|`B.........
+22:07:35.848709 Out 00:50:56:be:bb:d7 ethertype IPv4 (0x0800), length 56: (tos 0x0, ttl 64, id 27973, offset 0, flags [DF], proto TCP (6), length 40)
+    192.168.53.194.brlp-0 > 172.18.98.233.58057: Flags [F.], cksum 0x0581 (incorrect -> 0xbdfb), seq 929, ack 1074, win 262, length 0
+E..(mE@.@..$..5...b.......0.D...P.......
+22:07:35.875356  In a4:53:0e:8a:8a:99 ethertype IPv4 (0x0800), length 62: (tos 0x34, ttl 124, id 59399, offset 0, flags [DF], proto TCP (6), length 40)
+    172.18.98.233.58057 > 192.168.53.194.brlp-0: Flags [.], cksum 0x42a1 (correct), seq 1074, ack 930, win 31840, length 0
+E4.(..@.|.....b...5.....D.....0.P.|`B.........
+
