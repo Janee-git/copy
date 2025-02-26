@@ -125,3 +125,11 @@ REFRESH SECURITY TYPE(CONNAUTH)
 
 
 https://www.ibm.com/docs/en/ibm-mq/9.3?topic=amumc-running-mqsc-commands-from-text-files-under-runmqsc
+
+
+run below clock in as ansible as shell not as command
+
+- name: load mqsc data into Queue manager
+  command: runmqsc -f /tmp/{{ mqsc_file }} "{{ queue_manager }}"
+  become: yes
+  become_user: mqm
