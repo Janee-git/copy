@@ -5,3 +5,34 @@
             dest: "/tmp/{{ mqsc_file }}"
           become: yes
           become_user: mqm
+
+
+
+#################
+- name: Copy multiple MQSC files to remote host
+  hosts: mq_servers
+  vars:
+    mqsc_files:
+      - src: "/path/to/local/file1.mqsc"
+        dest: "/tmp/file1.mqsc"
+      - src: "/path/to/local/file2.mqsc"
+        dest: "/tmp/file2.mqsc"
+      - src: "/path/to/local/file3.mqsc"
+        dest: "/tmp/file3.mqsc"
+
+  tasks:
+    - block:
+        - name: Copy local MQSC files to remote host
+          copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+          become: yes
+          become_user: mqm
+          loop: "{{ mqsc_files }}"
+Explanation:
+vars:: Defines a list of files with their respective source (src) and destination (dest) paths.
+block:: Groups the tasks together. In this case, it helps in organizing the copy operations and can handle error handling or cleanup if needed.
+copy:: Ansible module that copies files from the local machine to the remote host.
+loop:: Iterates over the mqsc_files list, copying each file to its specified destination.
+become: and become_user:: Ensures the task runs with elevated privileges as the mqm user, which is typically required for IBM MQ operations.
+This approach is flexible and can easily be expanded to include more files or different destinations. If you need additional customizations or error handling within the block, let me know!
