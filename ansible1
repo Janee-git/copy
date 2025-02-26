@@ -86,3 +86,24 @@ fatal: [wmqeuu3.prod]: FAILED! => {"changed": false, "cmd": "source /opt/mqm/bin
       become: yes
       become_user: mqm
       when: qm_exists.rc != 0
+###########################################################
+
+[mqm@wmqeuu3 ~]$ runmqsc IFDSEUUQ2
+5724-H72 (C) Copyright IBM Corp. 1994, 2024.
+Starting MQSC for queue manager IFDSEUUQ2.
+
+
+define qlocal(CTN.ORDER.RESQUEST)
+     1 : define qlocal(CTN.ORDER.RESQUEST)
+AMQ8006I: IBM MQ queue created.
+ALTER QMGR CHLAUTH(DISABLED)
+     2 : ALTER QMGR CHLAUTH(DISABLED)
+AMQ8005I: IBM MQ queue manager changed.
+def channel (ADMIN.CHANNEL) chltype(SVRCONN) MCAUSER('mqm') SSLCAUTH(OPTIONAL) TRPTYPE(TCP)
+     3 : def channel (ADMIN.CHANNEL) chltype(SVRCONN) MCAUSER('mqm') SSLCAUTH(OPTIONAL) TRPTYPE(TCP)
+AMQ8014I: IBM MQ channel created.
+REFRESH SECURITY TYPE(CONNAUTH)
+     4 : REFRESH SECURITY TYPE(CONNAUTH)
+AMQ8560I: IBM MQ security cache refreshed.
+end
+     5 : end
