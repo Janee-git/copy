@@ -107,3 +107,18 @@ REFRESH SECURITY TYPE(CONNAUTH)
 AMQ8560I: IBM MQ security cache refreshed.
 end
      5 : end
+
+
+
+---------------------------------------------------------
+* Define a local queue
+DEFINE QLOCAL(CTN.ORDER.RESQUEST)
+
+* Disable channel authentication
+ALTER QMGR CHLAUTH(DISABLED)
+
+* Define a server connection channel with no SSL certificate authentication
+DEFINE CHANNEL(ADMIN.CHANNEL) CHLTYPE(SVRCONN) MCAUSER('mqm') SSLCAUTH(OPTIONAL) TRPTYPE(TCP)
+
+* Refresh security to apply changes
+REFRESH SECURITY TYPE(CONNAUTH)
