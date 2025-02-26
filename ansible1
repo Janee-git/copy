@@ -151,3 +151,8 @@ Additional Considerations:
 If the mqsc_file or queue_manager contains any special characters or spaces, wrap them in double quotes for safety.
 Using shell ensures the command runs in a proper shell environment, similar to how you would execute it manually as mqm.
 If you need any more adjustments or explanations, feel free to ask!
+
+
+
+Provide ansible yml to run below command remotely via ansibleplayuat id . 
+[ansibleplayuat@ansiblem2 websphere-install-master]$ ssh mqm@wmqeuu3 "/tmp/wmqsetup.sh"
