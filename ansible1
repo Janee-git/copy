@@ -77,3 +77,12 @@ Let me know if you need more configurations or help with automation using Ansibl
 
 TASK [websphere-config : environment setup before create QMGR] *****************************************
 fatal: [wmqeuu3.prod]: FAILED! => {"changed": false, "cmd": "source /opt/mqm/bin/setmqenv '||' export MQSNOAUT=YES '&&' set '|grep' -i mq", "msg": "[Errno 13] Permission denied: b'source'", "rc": 13}
+
+
+- block:
+    - name: Environment setup before creating QMGR
+      shell: |
+        source /opt/mqm/bin/setmqenv || export MQSNOAUT=YES && set | grep -i mq
+      become: yes
+      become_user: mqm
+      when: qm_exists.rc != 0
