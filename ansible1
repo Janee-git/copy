@@ -156,3 +156,34 @@ If you need any more adjustments or explanations, feel free to ask!
 
 Provide ansible yml to run below command remotely via ansibleplayuat id . 
 [ansibleplayuat@ansiblem2 websphere-install-master]$ ssh mqm@wmqeuu3 "/tmp/wmqsetup.sh"
+
+
+Here is the Ansible playbook to run the command remotely as the mqm user:
+
+yaml
+Copy
+Edit
+---
+- name: Run wmqsetup.sh as mqm user remotely
+  hosts: wmqeuu3
+  gather_facts: no
+  tasks:
+    - name: Execute wmqsetup.sh as mqm user
+      shell: ssh mqm@{{ inventory_hostname }} "/tmp/wmqsetup.sh"
+      become: no
+Explanation:
+hosts: wmqeuu3 – Replace this with your inventory group or hostname.
+gather_facts: no – Speeds up execution as facts are not required.
+shell: – Using shell because the command includes SSH execution.
+become: no – No need to escalate privileges as you are SSH-ing directly as mqm.
+Notes:
+Ensure that Ansible can SSH to the target host (wmqeuu3) as ansibleplayuat.
+mqm user must have SSH access from ansibleplayuat without password prompts.
+You might need SSH key setup or SSH agent forwarding for password-less authentication.
+Inventory Example (hosts.ini):
+ini
+Copy
+Edit
+[wmqeuu3]
+wmqeuu3 ansible_user=ansibleplayuat
+If you need any adjustments or more help, let me know!
