@@ -65,3 +65,15 @@ runmqsc <QMGR_NAME> < disable_chlauth_refresh_auth.mqsc
 Replace <QMGR_NAME> with the actual name of your Queue Manager.
 
 Let me know if you need more configurations or help with automation using Ansible!
+
+#####################
+
+- block:
+        - name: environment setup before create QMGR
+          command: source /opt/mqm/bin/setmqenv || export MQSNOAUT=YES && set |grep -i mq
+          become: yes
+          become_user: mqm
+          when: qm_exists.rc != 0
+
+TASK [websphere-config : environment setup before create QMGR] *****************************************
+fatal: [wmqeuu3.prod]: FAILED! => {"changed": false, "cmd": "source /opt/mqm/bin/setmqenv '||' export MQSNOAUT=YES '&&' set '|grep' -i mq", "msg": "[Errno 13] Permission denied: b'source'", "rc": 13}
