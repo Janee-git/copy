@@ -122,3 +122,6 @@ DEFINE CHANNEL(ADMIN.CHANNEL) CHLTYPE(SVRCONN) MCAUSER('mqm') SSLCAUTH(OPTIONAL)
 
 * Refresh security to apply changes
 REFRESH SECURITY TYPE(CONNAUTH)
+
+
+https://www.ibm.com/docs/en/ibm-mq/9.3?topic=amumc-running-mqsc-commands-from-text-files-under-runmqsc
