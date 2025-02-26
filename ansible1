@@ -133,3 +133,21 @@ run below clock in as ansible as shell not as command
   command: runmqsc -f /tmp/{{ mqsc_file }} "{{ queue_manager }}"
   become: yes
   become_user: mqm
+
+
+To run the block as a shell rather than a command in Ansible, you can modify it like this:
+
+yaml
+Copy
+Edit
+- name: Load MQSC data into Queue Manager
+  shell: runmqsc -f /tmp/{{ mqsc_file }} "{{ queue_manager }}"
+  become: yes
+  become_user: mqm
+Why use shell instead of command?
+The shell module uses the shell environment to execute commands, which means it supports more complex operations like pipes (|), redirects (>), and even variable expansions.
+In contrast, command bypasses the shell and directly executes the binary, which might not inherit the full environment setup or context needed for runmqsc.
+Additional Considerations:
+If the mqsc_file or queue_manager contains any special characters or spaces, wrap them in double quotes for safety.
+Using shell ensures the command runs in a proper shell environment, similar to how you would execute it manually as mqm.
+If you need any more adjustments or explanations, feel free to ask!
