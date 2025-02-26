@@ -1,0 +1,7 @@
+- block:
+        - name: Copy local queue MQSC file to remote host
+          copy:
+            src: "{{ mqsc_file }}"
+            dest: "/tmp/{{ mqsc_file }}"
+          become: yes
+          become_user: mqm
