@@ -40,3 +40,28 @@ This approach is flexible and can easily be expanded to include more files or di
 make mqsc file for ibm mq on below command 
 ALTER QMGR CHLAUTH(DISABLED)
 REFRESH SECURITY TYPE(CONNAUTH)
+
+--------------------
+To create an MQSC file for IBM MQ with the following commands:
+
+Disable Channel Authentication (CHLAUTH) for the Queue Manager.
+Refresh the Security settings for Connection Authentication (CONNAUTH).
+MQSC File Content (disable_chlauth_refresh_auth.mqsc):
+mqsc
+Copy
+Edit
+ALTER QMGR CHLAUTH(DISABLED)
+REFRESH SECURITY TYPE(CONNAUTH)
+Explanation:
+ALTER QMGR CHLAUTH(DISABLED): Disables channel authentication checks for the Queue Manager. This is typically used in non-production environments or for troubleshooting purposes.
+REFRESH SECURITY TYPE(CONNAUTH): Refreshes the security settings related to connection authentication. This ensures that changes to authentication configurations are applied immediately.
+Usage:
+You can use this MQSC file by running the following command on your IBM MQ server:
+
+bash
+Copy
+Edit
+runmqsc <QMGR_NAME> < disable_chlauth_refresh_auth.mqsc
+Replace <QMGR_NAME> with the actual name of your Queue Manager.
+
+Let me know if you need more configurations or help with automation using Ansible!
