@@ -36,3 +36,7 @@ copy:: Ansible module that copies files from the local machine to the remote hos
 loop:: Iterates over the mqsc_files list, copying each file to its specified destination.
 become: and become_user:: Ensures the task runs with elevated privileges as the mqm user, which is typically required for IBM MQ operations.
 This approach is flexible and can easily be expanded to include more files or different destinations. If you need additional customizations or error handling within the block, let me know!
+##############
+make mqsc file for ibm mq on below command 
+ALTER QMGR CHLAUTH(DISABLED)
+REFRESH SECURITY TYPE(CONNAUTH)
