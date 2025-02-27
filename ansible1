@@ -243,3 +243,30 @@ Copy
 Edit
 REFRESH SECURITY TYPE(CONNAUTH)
 Let me know if you need more help with IBM MQ or Ansible automation!
+
+
+
+
+DISPLAY AUTHREC OBJTYPE(*)
+     2 : DISPLAY AUTHREC OBJTYPE(*)
+AMQ8405I: Syntax error detected at or near end of command segment below:-
+DISPLAY AUTHREC OBJTYPE(*
+
+AMQ8427I: Valid syntax for the MQSC command:
+
+  DISPLAY AUTHREC
+
+     [ PROFILE( profile_name ) ]
+
+     [ OBJTYPE( AUTHINFO | CHANNEL  | CLNTCONN | COMMINFO | LISTENER |
+                NAMELIST | PROCESS  | QMGR     | QUEUE    | RQMNAME  |
+                SERVICE  | TOPIC    ) ]
+
+     [ PRINCIPAL( principal_name ) | GROUP( group_name ) ]
+
+     [ MATCH( PROFILE | MEMBERSHIP | EXACT ) ]
+
+     [ SERVCOMP( service_component_name ) ]
+
+     [ ALL      ] [ AUTHLIST ] [ ENTITY   ] [ ENTTYPE  ]
+
