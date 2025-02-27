@@ -187,3 +187,59 @@ Edit
 [wmqeuu3]
 wmqeuu3 ansible_user=ansibleplayuat
 If you need any adjustments or more help, let me know!
+
+
+
+
+how to disabled SET AUTHREC when run runmqsc remotely with mqm id on ibm mq 9  
+ChatGPT said:
+In IBM MQ 9, when running runmqsc remotely using the mqm ID, SET AUTHREC commands might be automatically applied due to the way security settings are configured. This is typically related to the CHLAUTH and CONNAUTH settings in the Queue Manager.
+
+To Disable SET AUTHREC:
+Disable CHLAUTH: This disables all Channel Authentication Rules:
+
+shell
+Copy
+Edit
+ALTER QMGR CHLAUTH(DISABLED)
+Disable CONNAUTH: This prevents MQ from enforcing connection authentication:
+
+shell
+Copy
+Edit
+ALTER QMGR CONNAUTH('')
+REFRESH SECURITY TYPE(CONNAUTH)
+Disable Automatic Authority Records (SET AUTHREC): IBM MQ 9 automatically sets AUTHREC when security is enabled. You can bypass this by setting the environment variable MQSNOAUT before running runmqsc.
+
+Example in Ansible:
+yaml
+Copy
+Edit
+- name: Run MQSC commands remotely without setting AUTHREC
+  shell: |
+    export MQSNOAUT=YES
+    runmqsc {{ queue_manager }} < /tmp/{{ mqsc_file }}
+  become: yes
+  become_user: mqm
+Ensure Correct Permissions: Ensure the mqm user has the necessary permissions and isn't impacted by other security rules:
+
+shell
+Copy
+Edit
+SET AUTHREC PRINCIPAL('mqm') OBJTYPE(QMGR) AUTHADD(ALL)
+Restart Queue Manager (Optional): If changes aren't effective, restart the Queue Manager:
+
+shell
+Copy
+Edit
+endmqm QMGR_NAME
+strmqm QMGR_NAME
+Summary:
+MQSNOAUT=YES disables the automatic SET AUTHREC.
+Disabling CHLAUTH and CONNAUTH can also prevent security checks.
+Ensure to refresh the security settings using:
+shell
+Copy
+Edit
+REFRESH SECURITY TYPE(CONNAUTH)
+Let me know if you need more help with IBM MQ or Ansible automation!
