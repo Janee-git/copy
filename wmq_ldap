@@ -1,0 +1,188 @@
+how to install IBM wmq 9 on rhel8 from ansible with mqm ldap ID and create queue manager IFDSEUUQ2 with CHLTYPRE (SVRCONN) with port 4101 . with local queue TEST.LQ1 connected with ibm explorer 8 
+ChatGPT said:
+Here’s how to install IBM WebSphere MQ 9 on RHEL 8 using Ansible with an LDAP-based mqm ID, and then create:
+
+Queue Manager: IFDSEUUQ2
+Channel: ADMIN.CHANNEL of type SVRCONN
+Listener: Listening on port 4101
+Local Queue: TEST.LQ1
+IBM Explorer 8 Connectivity: Configured to allow remote connections.
+Prerequisites:
+IBM MQ Installation Package: Make sure IBM_MQ_9.tar.gz is accessible on the Ansible control node or a network share.
+LDAP User (mqm): Confirm the LDAP user exists and is recognized on the target RHEL 8 server:
+shell
+Copy
+Edit
+id mqm
+Ensure Required Packages: Install gcc, glibc, libstdc++, and other dependencies on the target server.
+Ports Opened: Ensure port 4101 is open in the firewall for MQ communication.
+Directory Structure:
+Installation directory: /tmp/mq_install
+MQ Installation Path: /opt/mqm
+Ansible Playbook Overview:
+This playbook will:
+
+Install IBM MQ 9.
+Create and configure Queue Manager IFDSEUUQ2.
+Create ADMIN.CHANNEL of type SVRCONN.
+Create local queue TEST.LQ1.
+Start a listener on port 4101.
+Configure remote connectivity for IBM Explorer 8.
+Ansible Playbook: install_and_configure_mq.yml
+yaml
+Copy
+Edit
+---
+- name: Install and Configure IBM MQ 9 on RHEL 8
+  hosts: mq_servers
+  become: yes
+  vars:
+    mq_package: IBM_MQ_9.tar.gz
+    mq_install_dir: /tmp/mq_install
+    mq_install_path: /opt/mqm
+    queue_manager: IFDSEUUQ2
+    listener_port: 4101
+    svrconn_channel: ADMIN.CHANNEL
+    local_queue: TEST.LQ1
+
+  tasks:
+    - name: Ensure required packages are installed
+      yum:
+        name:
+          - gcc
+          - glibc
+          - libstdc++
+          - libgcc
+          - libaio
+          - compat-libstdc++-33
+        state: present
+      become: yes
+
+    - name: Create installation directory
+      file:
+        path: "{{ mq_install_dir }}"
+        state: directory
+        mode: '0755'
+      become: yes
+
+    - name: Upload IBM MQ package
+      copy:
+        src: "{{ mq_package }}"
+        dest: "{{ mq_install_dir }}/"
+      become: yes
+
+    - name: Extract IBM MQ package
+      unarchive:
+        src: "{{ mq_install_dir }}/{{ mq_package }}"
+        dest: "{{ mq_install_dir }}"
+        remote_src: yes
+      become: yes
+
+    - name: Install IBM MQ using rpm
+      shell: |
+        cd {{ mq_install_dir }}/MQServer
+        rpm -ivh MQSeries*.rpm
+      become: yes
+
+    - name: Set permissions for mqm user
+      file:
+        path: "{{ mq_install_path }}"
+        owner: mqm
+        group: mqm
+        recurse: yes
+      become: yes
+
+    - name: Configure environment variables
+      blockinfile:
+        path: /etc/profile.d/mqenv.sh
+        create: yes
+        mode: '0755'
+        block: |
+          export MQ_INSTALLATION_PATH={{ mq_install_path }}
+          export PATH=$PATH:$MQ_INSTALLATION_PATH/bin:$MQ_INSTALLATION_PATH/samp/bin
+      become: yes
+
+    - name: Source the environment variables
+      shell: source /etc/profile.d/mqenv.sh
+      become: yes
+
+    - name: Create Queue Manager
+      shell: |
+        . /opt/mqm/bin/setmqenv -s
+        crtmqm -u SYSTEM.DEAD.LETTER.QUEUE -p {{ listener_port }} {{ queue_manager }}
+        strmqm {{ queue_manager }}
+      become: yes
+      become_user: mqm
+      ignore_errors: yes
+
+    - name: Configure MQSC Commands
+      copy:
+        dest: /tmp/mq_setup.mqsc
+        content: |
+          DEFINE QLOCAL('{{ local_queue }}')
+          ALTER QMGR CHLAUTH(DISABLED)
+          DEFINE CHANNEL('{{ svrconn_channel }}') CHLTYPE(SVRCONN) MCAUSER('mqm') SSLCAUTH(OPTIONAL) TRPTYPE(TCP)
+          START LISTENER('{{ queue_manager }}.LISTENER') TRPTYPE(TCP) PORT({{ listener_port }})
+          REFRESH SECURITY TYPE(CONNAUTH)
+          END
+      become: yes
+
+    - name: Apply MQSC configuration
+      shell: |
+        . /opt/mqm/bin/setmqenv -s
+        runmqsc {{ queue_manager }} < /tmp/mq_setup.mqsc
+      become: yes
+      become_user: mqm
+
+    - name: Display Queue Manager Status
+      shell: |
+        . /opt/mqm/bin/setmqenv -s
+        dspmq
+      become: yes
+      become_user: mqm
+      register: qmgr_status
+
+    - name: Display Queue Manager Status Output
+      debug:
+        msg: "{{ qmgr_status.stdout }}"
+Inventory File: hosts.ini
+ini
+Copy
+Edit
+[mq_servers]
+wmqserver1 ansible_host=<IP_ADDRESS> ansible_user=ansibleplayuat
+wmqserver2 ansible_host=<IP_ADDRESS> ansible_user=ansibleplayuat
+Execution:
+Run the playbook using:
+
+shell
+Copy
+Edit
+ansible-playbook -i hosts.ini install_and_configure_mq.yml
+Explanation:
+Package Installation: Ensures required dependencies are present.
+Installation & Configuration:
+Extracts and installs IBM MQ using RPM.
+Sets permissions for mqm LDAP user.
+Configures environment variables.
+Queue Manager Setup:
+Creates the Queue Manager IFDSEUUQ2.
+Disables CHLAUTH for remote access.
+Defines a local queue named TEST.LQ1.
+Sets up ADMIN.CHANNEL of type SVRCONN.
+Starts a listener on port 4101.
+Remote Access Configuration:
+Sets MCAUSER('mqm') to allow admin connections via IBM Explorer 8.
+Disables SSLCAUTH for easier connectivity.
+Connecting via IBM Explorer 8:
+Open IBM Explorer 8 and add a new Queue Manager.
+Set the following:
+Connection Name: <Server_IP>(4101)
+Channel: ADMIN.CHANNEL
+User ID: mqm
+Test the connection and explore the TEST.LQ1 queue.
+Additional Tips:
+Adjust CHLAUTH and MCAUSER settings as per your security policies.
+If firewall is enabled, allow traffic on port 4101.
+For production, consider enabling SSL and setting up proper authentication.
+This playbook efficiently sets up IBM MQ 9 with remote access capabilities suitable for use with IBM Explorer 8. Let me know if you need any modifications or additional features!
