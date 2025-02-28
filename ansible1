@@ -291,3 +291,35 @@ One MQSC command read.
 No commands have a syntax error.
 All valid MQSC commands were processed.
 
+
+1. Remove AUTHREC for PROFILE(self):
+shell
+Copy
+Edit
+echo "SET AUTHREC PROFILE(self) OBJTYPE(QMGR) GROUP(mqm) AUTHADD(ALL) REMOVE" | runmqsc IFDSEUUQ2
+2. Remove AUTHREC for PROFILE(@class):
+shell
+Copy
+Edit
+echo "SET AUTHREC PROFILE(@class) OBJTYPE(QMGR) GROUP(mqm) AUTHADD(ALL) REMOVE" | runmqsc IFDSEUUQ2
+3. Verify Removal:
+After running the commands, verify the changes with:
+
+shell
+Copy
+Edit
+echo "DISPLAY AUTHREC OBJTYPE(QMGR) ALL" | runmqsc IFDSEUUQ2
+You should see no entries related to PROFILE(self) or PROFILE(@class).
+
+4. Explanation:
+AUTHADD(ALL) REMOVE: This combination removes all authorization records for the specified PROFILE and GROUP.
+OBJTYPE(QMGR): Targets the queue manager object type.
+GROUP(mqm): Specifies the LDAP group mqm.
+If the records persist, double-check the group membership or manually clear the queue manager's security cache:
+
+shell
+Copy
+Edit
+echo "REFRESH SECURITY TYPE(ALL)" | runmqsc IFDSEUUQ2
+If you face any issues or need additional adjustments, let me know!
+
