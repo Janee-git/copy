@@ -270,3 +270,24 @@ AMQ8427I: Valid syntax for the MQSC command:
 
      [ ALL      ] [ AUTHLIST ] [ ENTITY   ] [ ENTTYPE  ]
 
+
+#######################################
+how to remove below AUTRREC 
+[mqm@wmqeuu3 ~]$ echo "DISPLAY AUTHREC OBJTYPE(QMGR) ALL" |runmqsc IFDSEUUQ2
+5724-H72 (C) Copyright IBM Corp. 1994, 2024.
+Starting MQSC for queue manager IFDSEUUQ2.
+
+
+     1 : DISPLAY AUTHREC OBJTYPE(QMGR) ALL
+AMQ8864I: Display authority record details.
+   PROFILE(self)                           ENTITY(mqm)
+   ENTTYPE(GROUP)                          OBJTYPE(QMGR)
+   AUTHLIST(ALTUSR,CHG,CONNECT,DLT,DSP,INQ,SET,SETALL,SETID,CTRL,SYSTEM)
+AMQ8864I: Display authority record details.
+   PROFILE(@class)                         ENTITY(mqm)
+   ENTTYPE(GROUP)                          OBJTYPE(QMGR)
+   AUTHLIST(CRT)
+One MQSC command read.
+No commands have a syntax error.
+All valid MQSC commands were processed.
+
