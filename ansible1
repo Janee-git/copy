@@ -379,3 +379,13 @@ If you face any issues or need additional adjustments, let me know!
 [ansibleplayuat@ansiblem2 tasks]$
 
 
+tasks:
+    - name: Add mqm user using shell command
+      shell: /usr/sbin/luseradd mqm
+      args:
+        creates: /home/mqm
+      ignore_errors: yes  
+
+    - name: Set password for mqm user securely
+      shell: echo "{{ mqm_password }}" | passwd --stdin mqm
+
