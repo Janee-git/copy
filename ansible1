@@ -323,3 +323,59 @@ Edit
 echo "REFRESH SECURITY TYPE(ALL)" | runmqsc IFDSEUUQ2
 If you face any issues or need additional adjustments, let me know!
 
+
+##################
+[ansibleplayuat@ansiblem2 tasks]$ cat main.yml
+---
+    - name: Install required packages
+      yum:
+        name:
+          - glibc
+          - pam
+          - libstdc++.so.6
+          - java
+        state: present
+
+    - name: Add MQM user
+      user:
+        name: mqm
+        state: present
+        group: mqm
+
+    - name: Create WMQ directory
+      file:
+        path: /opt/WMQ
+        state: directory
+        owner: mqm
+        group: mqm
+
+    - name: Extract IBM MQ bundle
+      unarchive:
+        src: 9.4.0.0-IBM-MQ-LinuxX64.tar.gz
+        dest: /opt/WMQ
+
+    - name: Accept MQ license
+      command: ./mqlicense.sh -accept
+      args:
+        chdir: /opt/WMQ/MQServer
+
+    - name: Gather MQ RPM files
+      find:
+        paths: /opt/WMQ/MQServer/
+        patterns: "MQ*.rpm"
+      register: mq_rpms
+
+    - name: Install MQ RPMs
+      command: rpm -ivh /opt/WMQ/MQServer/MQ*.rpm
+      args:
+        chdir: /opt/WMQ/MQServer
+      register: install_result
+      ignore_errors: yes
+
+    - name: Set MQ environment
+      command: ./setmqinst -i -p /opt/mqm
+      args:
+        chdir: /opt/mqm/bin
+[ansibleplayuat@ansiblem2 tasks]$
+
+
