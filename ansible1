@@ -576,3 +576,15 @@ The offending line appears to be:
       when: qm_exists.rc != 0
 [root@ansiblem2 tasks]#
 
+###############
+ERROR! conflicting action statements: dest, src
+
+The error appears to be in '/playbook/files/websphere-install-master/roles/websphere-config/tasks/main.yml': line 30, column 11, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+    - block:
+        - name: Copy Admin channel MQSC file to remote host
+          ^ here
+
