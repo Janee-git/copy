@@ -389,3 +389,63 @@ tasks:
     - name: Set password for mqm user securely
       shell: echo "{{ mqm_password }}" | passwd --stdin mqm
 
+
+##########################################################################################
+[root@ansiblem2 tasks]# cat main.yml
+---
+    - name: Ensure queue manager does not already exist
+      shell: dspmq | grep -q {{ queue_manager }}
+      register: qm_exists
+      ignore_errors: yes
+
+    - block:
+        - name: environment setup before create QMGR
+          shell: |
+            source /opt/mqm/bin/setmqenv || export MQSNOAUT=YES && set | grep -i mq
+          become: yes
+          become_user: mqm
+          when: qm_exists.rc != 0
+
+        - name: Create a queue manager
+          command: crtmqm -u SYSTEM.DEAD.LETTER.QUEUE -p {{admin_port}} {{ queue_manager }}
+          become: yes
+          become_user: mqm
+          when: qm_exists.rc != 0
+
+        - name: Start queue manager
+          command: strmqm {{ queue_manager }}
+          become: yes
+          become_user: mqm
+          when: qm_exists.rc != 0
+
+      when: qm_exists.rc != 0
+
+    - block:
+        - name: Copy Admin channel  MQSC file to remote host
+          copy:
+            src: "{{ mqsc_channel_C1 }}"
+            dest: "/tmp/{{ mqsc_channel_C1 }}"
+          become: yes
+          become_user: mqm
+
+        - name: Copy local queue MQSC file to remote host
+          copy:
+            src: "{{ mqsc_lqueues }}"
+            dest: "/tmp/{{ mqsc_lqueues }}"
+          become: yes
+          become_user: mqm
+
+        - name: load ADMIN channel setup mqsc data into Queue manager
+          shell: runmqsc -f /tmp/{{ mqsc_channel_C1 }} "{{ queue_manager }}"
+          become: yes
+          become_user: mqm
+
+        - name: load Local queue mqsc data into Queue manager
+          shell: runmqsc -f /tmp/{{ mqsc_lqueues }} "{{ queue_manager }}"
+          become: yes
+          become_user: mqm
+
+      when: qm_exists.rc != 0 or qm_exists.rc == 0
+
+[root@ansiblem2 tasks]#
+
