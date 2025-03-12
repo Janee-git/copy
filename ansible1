@@ -638,3 +638,55 @@ chmod -R 2775 /var/ifds/htbridge
 SSB_bridgeChannels.xml
 SSB_connConfig.xml
 copy /opt/ifds/htbridge/xml
+
+
+
+---
+- name: Setup directories and permissions for htbridge
+  hosts: target_servers
+  become: yes
+  vars:
+    xml_files:
+      - SSB_bridgeChannels.xml
+      - SSB_connConfig.xml
+    dest_path: /opt/ifds/htbridge/xml
+  tasks:
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: htbridge
+        group: htbridge
+        mode: "2775"
+      loop:
+        - /var/ifds/htbridge/log
+        - /var/ifds/htbridge/msgfiles
+
+    - name: Set ownership for /var/ifds
+      file:
+        path: /var/ifds
+        owner: root
+        group: admindst
+        state: directory
+
+    - name: Set recursive ownership for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        owner: htbridge
+        group: htbridge
+        recurse: yes
+
+    - name: Set recursive permissions for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        mode: "2775"
+        recurse: yes
+
+    - name: Copy XML files to destination
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_path }}/{{ item }}"
+        owner: htbridge
+        group: htbridge
+        mode: "0644"
+      loop: "{{ xml_files }}"
