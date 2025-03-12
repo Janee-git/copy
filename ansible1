@@ -634,3 +634,7 @@ chmod -R 2775 /var/ifds/htbridge
         mode: "2775"
         recurse: yes
 
+###############
+SSB_bridgeChannels.xml
+SSB_connConfig.xml
+copy /opt/ifds/htbridge/xml
