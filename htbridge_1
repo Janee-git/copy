@@ -1,0 +1,9 @@
+---
+ - hosts: hosts
+   become: yes
+   remote_user: ansibleplayuat
+
+   roles:
+     - htbridge-install
+
+[ansibleplayuat@ansiblem2 websphere-install]$
