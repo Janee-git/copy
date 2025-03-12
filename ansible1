@@ -587,4 +587,12 @@ The offending line appears to be:
     - block:
         - name: Copy Admin channel MQSC file to remote host
           ^ here
+#####################################################################
 
+
+/var/ifds/htbridge/log/
+/var/ifds/htbridge/msgfiles/
+
+chown root:admindst /var/ifds
+chown -R htbridge:htbridge /var/ifds/htbridge
+chmod -R 2775 /var/ifds/htbridge
