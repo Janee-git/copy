@@ -1,0 +1,61 @@
+[root@ansiblem2 tasks]# cat main.yml
+---
+    - name: Setup directories and permissions for htbridge
+      hosts: target_servers
+      become: yes
+      vars:
+        xml_files:
+          - "{{ TA }}_bridgeChannels.xml"
+          - "{{ TA }}_connConfig.xml"
+        dest_path: /opt/ifds/htbridge/xml
+  tasks:
+    - name: Add HTBRIDGE user
+      user:
+       name: htbridge
+       state: present
+       group: htbridge
+
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: htbridge
+        group: htbridge
+        mode: "2775"
+      loop:
+        - /var/ifds/htbridge/log
+        - /var/ifds/htbridge/msgfiles
+
+    - name: Set ownership for /var/ifds
+      file:
+        path: /var/ifds
+        owner: root
+        group: admindst
+        state: directory
+
+    - name: Set recursive ownership for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        owner: htbridge
+        group: htbridge
+        recurse: yes
+
+    - name: Set recursive permissions for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        mode: "2775"
+        recurse: yes
+    - name: Extract IBM MQ bundle
+      unarchive:
+        src: htbridge.tar.gz
+        dest: /opt/ifds
+
+    - name: Copy XML files to destination
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_path }}/{{ item }}"
+        owner: htbridge
+        group: htbridge
+        mode: "0644"
+      loop: "{{ xml_files }}"
+[root@ansiblem2 tasks]#
