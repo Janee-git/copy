@@ -596,3 +596,41 @@ The offending line appears to be:
 chown root:admindst /var/ifds
 chown -R htbridge:htbridge /var/ifds/htbridge
 chmod -R 2775 /var/ifds/htbridge
+
+==============
+---
+- name: Setup directories and permissions for htbridge
+  hosts: target_servers
+  become: yes
+  tasks:
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: htbridge
+        group: htbridge
+        mode: "2775"
+      loop:
+        - /var/ifds/htbridge/log
+        - /var/ifds/htbridge/msgfiles
+
+    - name: Set ownership for /var/ifds
+      file:
+        path: /var/ifds
+        owner: root
+        group: admindst
+        state: directory
+
+    - name: Set recursive ownership for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        owner: htbridge
+        group: htbridge
+        recurse: yes
+
+    - name: Set recursive permissions for /var/ifds/htbridge
+      file:
+        path: /var/ifds/htbridge
+        mode: "2775"
+        recurse: yes
+
