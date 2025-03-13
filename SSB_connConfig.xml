@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<process xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <connection name="MQM.IFDSEUUQ2">
+      <transport property="TRANSPORT_MQSERIES_BINDINGS" />
+      <QueueManager name="IFDSEUUQ2" />
+   </connection>
+
+   <connection name="SMQ.SSBETA">
+      <properties faultTolerant="true"
+                  connectionURLs="tcp://msgeuu1:30101,tcp://msgeuu2:30101"
+                  defaultUser="bridge"
+                  defaultPassword="bridge1234"/>
+   </connection>
+
+   <connection name="SMQ.CALASTONE">
+      <properties faultTolerant="true"
+                  connectionURLs="tcp://msgeuu1:26136,tcp://msgeuu2:26136"
+                  defaultUser="bridge"
+                  defaultPassword="bridge1234"/>
+  </connection>
+
+   <connection name="SMQ.BATCH">
+      <properties faultTolerant="true"
+                  connectionURLs="tcp://msgeuu1:30103,tcp://msgeuu2:30103"
+                  defaultUser="bridge"
+                  defaultPassword="bridge1234"/>
+  </connection>
+
+   <connection name="AMQ.APPL">
+      <properties brokerURL="failover:(tcp://FUSEMSGTOU2:30101,tcp://FUSEMSGMAU2:30101)"
+                  userName="ifast"
+                  password="ifast1234"/>
+  </connection>
+
+   <connection name="AMQ.XFER">
+      <properties brokerURL="failover:(tcp://FUSEMSGTOU2:30101,tcp://FUSEMSGMAU2:30101)"
+                  userName="ifast"
+                  password="ifast1234"/>
+   </connection>
+
+</process>

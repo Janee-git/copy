@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<process xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <channel name= "CALASTONE_ORDER_REQUEST" workers="1">
+      <endpoint direction="START" connection="SMQ.CALASTONE"
+                                type="JMSEndpoint">
+         <Queue name="CTN.ORDER.REQUEST"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.APPL"
+                                type="AMQEndpoint">
+         <Queue name="CTN.ORDER.REQUEST"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "CALASTONE_ORDER_RESPONSE" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                type="AMQEndpoint">
+         <Queue name="CTN.ORDER.RESPONSE"/>
+      </endpoint>
+      <endpoint direction="END" connection="SMQ.CALASTONE"
+                                type="JMSEndpoint">
+         <Queue name="CTN.ORDER.RESPONSE"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "CALASTONE_ORDER_CONFIRM" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                type="AMQEndpoint">
+         <Queue name="CTN.ORDER.CONFIRM"/>
+      </endpoint>
+      <endpoint direction="END" connection="SMQ.CALASTONE"
+                                type="JMSEndpoint">
+         <Queue name="CTN.ORDER.CONFIRM"/>
+      </endpoint>
+   </channel>
+
+   <channel name="INTERACTIVE_ORDER_REQUEST" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.REQUEST"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.APPL"
+                                type="AMQEndpoint">
+         <Queue name="ETA.ORDER.REQUEST"/>
+      </endpoint>
+   </channel>
+
+   <channel name="INTERACTIVE_ORDER_RESPONSE" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                  type="AMQEndpoint"> 
+         <Queue name="SSC.ORDER.RESPONSE"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.RESPONSE"/>
+      </endpoint>
+   </channel>
+
+   <channel name="INTERACTIVE_ORDER_CONFIRM" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                  type="AMQEndpoint">
+         <Queue name="SSC.ORDER.CONFIRM"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.CONFIRM"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "INTERACTIVE_STATEMENTS" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                  type="AMQEndpoint">
+         <Queue name="ETA.STATEMENTS"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.STATEMENTS"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "INTERACTIVE_INTRADAY" workers="1">
+      <endpoint direction="START" connection="AMQ.APPL"
+                                  type="AMQEndpoint">
+         <Queue name="ETA.IFDS.INTRADAY"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.IFDS.INTRADAY"/>
+      </endpoint>
+   </channel>
+
+   <channel name="BATCH_GLOBAL_BESS" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.IFDS.GLOBAL.BESS"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.IFDS.GLOBAL.BESS"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_GLOBAL_CATRIN" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.IFDS.GLOBAL.CATRIN"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.IFDS.GLOBAL.CATRIN"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_PAYMENTS" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ETA.PAYMENTS"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.PAYMENTS"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_ORDER_CONFIRM" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ETA.ORDER.FILE.CONFIRM"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.FILE.CONFIRM"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_ORDER_RESPONSE" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ETA.ORDER.FILE.RESPONSE"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.FILE.RESPONSE"/>
+      </endpoint>
+   </channel>
+   
+   <channel name= "BATCH_CHEQUES_OUT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ICC.IFDS.CHEQUES"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                          type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.IFDS.CHEQUES"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_KIID_OUT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ICC.SSB.KIID.FILE.RESPONSE"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.IFDS.KIID.OUT"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_GDEC_OUT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ICC.IFDS.GDEC"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.IFDS.GDEC"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_BAFF_OUT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                  type="AMQEndpoint">
+         <Queue name="ICC.IFDS.BAFF"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.IFDS.BAFF"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_ORDER_REQUEST" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ORDER.FILE.REQUEST"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.ORDER.FILE.REQUEST"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_IFDSHUB_OUT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.SSB.IFDSHUB.OUT"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.SSB.IFDSHUB.OUT"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_IFDSHUB_IN" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.SSB.IFDSHUB.IN"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.SSB.IFDSHUB.IN"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_PRICEFILE_IUK_IN" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.PRICEFILE.IFDSEURO.IN"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="PRICE.FILE.IN"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_SECRECON" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.SECRECON"/>
+      </endpoint>
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.SECRECON"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_FRONTIER_SWIFT_STMTS" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ETA_FRONTIER_SWIFT_STMTS"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.ETA_FRONTIER_SWIFT_STMTS"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_FRONTIER_GSMAC" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.ETA_FRONTIER_GSMAC"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.ETA_FRONTIER_GSMAC"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_KIID_IN" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.SSB.KIID.IN"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ICC.SSB.KIID.FILE.REQUEST"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_FRONTIER_MT103" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.IFDS.FRONTIER.MT103"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.IFDS.FRONTIER.MT103"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_FRONTIER_MT202" workers="1">
+      <endpoint direction="START" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ETA.IFDS.FRONTIER.MT202"/>
+      </endpoint>
+      <endpoint direction="END" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ETA.IFDS.FRONTIER.MT202"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_FUND_CONNECT" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="FNDC.IFDS.BATCH.FILE"/>
+      </endpoint>
+
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="FNDC.IFDS.BATCH.FILE"/>
+      </endpoint>
+   </channel>
+
+   <channel name= "BATCH_MARKETING_FILES" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ICC.MARKETING_FILES"/>
+      </endpoint>
+
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.MARKETING_FILES"/>
+      </endpoint>
+
+   </channel>
+  
+  <channel name= "BATCH_LDN" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ICC.LARGE_DEAL_NOTIFICATION"/>
+      </endpoint>
+
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.LARGE_DEAL_NOTIFICATION"/>
+      </endpoint>
+
+   </channel>
+  <channel name= "BATCH_ALADDIN" workers="1">
+      <endpoint direction="START" connection="AMQ.XFER"
+                                type="AMQEndpoint">
+         <Queue name="ICC.IFDS.ALADDIN"/>
+      </endpoint>
+
+      <endpoint direction="END" connection="MQM.IFDSEUUQ2"
+                                  type="WebsphereMQNativeEndpoint">
+         <Queue name="ICC.IFDS_ALADDIN"/>
+      </endpoint>
+
+   </channel>
+   
+</process>
+
