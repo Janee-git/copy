@@ -1,0 +1,127 @@
+Name:             webplusapp-webplus-prod-56fbd4b85b-4t6vk
+Namespace:        app-prod-webplus
+Priority:         0
+Service Account:  default
+Node:             si1clusterp1-bm65h-worker-kbrhm/192.168.202.188
+Start Time:       Sat, 08 Mar 2025 08:54:36 -0500
+Labels:           app=webplusapp-webplus-prod
+                  env=webplus-prod
+                  owner=IFDSBuild
+                  pod-template-hash=56fbd4b85b
+                  release=webplus-prod
+Annotations:      checksum/config: 0dc3fd43dc6054f1f9fe0da4a131fb94d20a678d1ec99c4930fed3b1de443382
+                  k8s.v1.cni.cncf.io/network-status:
+                    [{
+                        "name": "openshift-sdn",
+                        "interface": "eth0",
+                        "ips": [
+                            "10.128.6.191"
+                        ],
+                        "default": true,
+                        "dns": {}
+                    }]
+                  openshift.io/scc: anyuid
+                  pod.boostport.com/vault-approle: webplus
+                  pod.boostport.com/vault-init-container: get-vault-token
+Status:           Running
+IP:               10.128.6.191
+IPs:
+  IP:           10.128.6.191
+Controlled By:  ReplicaSet/webplusapp-webplus-prod-56fbd4b85b
+Init Containers:
+  get-vault-token:
+    Container ID:   cri-o://e50821ad84963b32c19a4a88ddae88bd75e1650f3343cf737fc6ad45765f3e46
+    Image:          docker-prod-local.si1ocevar01.clustere.ifdsgroup.ca/ifast/kubernetes-vault-init:v0.6.0
+    Image ID:       docker-prod-local.si1ocevar01.clustere.ifdsgroup.ca/ifast/kubernetes-vault-init@sha256:7d0cdf5342c971bba95da8874668cb7081b06501428a43f5e3c8401d9565ad43
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sat, 08 Mar 2025 08:54:39 -0500
+      Finished:     Sat, 08 Mar 2025 08:54:42 -0500
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      VAULT_ROLE_ID:     bc4a2e6f-09c4-e563-0eaa-ed178dd5802a
+      CREDENTIALS_PATH:  /var/run/secrets/ifds
+    Mounts:
+      /var/run/secrets/ifds from vault-token (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cksxn (ro)
+Containers:
+  webplusapp-webplus-prod:
+    Container ID:  cri-o://8229d29ba461df9e60f48e71df728d70443b27f4c98f5fa9b9bdb1dde71a16e0
+    Image:         docker-prod-local.si1ocevar01.clustere.ifdsgroup.ca/webplus/25.2.07_webplusapp
+    Image ID:      docker-prod-local.si1ocevar01.clustere.ifdsgroup.ca/webplus/25.2.07_webplusapp@sha256:136cf791c632ecf34976093c648bc3a7e3d4ddce41d14f807aae100fad675b18
+    Port:          8080/TCP
+    Host Port:     0/TCP
+    Command:
+      /bin/bash
+      -c
+      /bin/bash /init-main/entry_point.sh
+
+    State:          Running
+      Started:      Sat, 08 Mar 2025 08:54:52 -0500
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     2
+      memory:  8000Mi
+    Requests:
+      cpu:     10m
+      memory:  1Gi
+    Startup:   http-get http://:8080/ delay=80s timeout=1s period=10s #success=1 #failure=30
+    Environment Variables from:
+      webplusapp-env-webplus-prod  ConfigMap  Optional: false
+    Environment:
+      TZ:        Canada/Eastern
+      ENV_NAME:  prod
+      RELEASE:   25.2.07
+    Mounts:
+      /init from app-init (rw)
+      /init-main from global-init (rw)
+      /opt/relver from status-file (rw)
+      /var/run/secrets/ifds from vault-token (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cksxn (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  vault-token:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  status-file:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  webplusmysqlclient-tmp-pvc-webplus-prod
+    ReadOnly:   false
+  app-init:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      webplusapp-init-webplus-prod
+    Optional:  false
+  global-init:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      webplus-prod-entrypoint-script
+    Optional:  false
+  kube-api-access-cksxn:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+    ConfigMapName:           openshift-service-ca.crt
+    ConfigMapOptional:       <nil>
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason                           Age                      From     Message
+  ----     ------                           ----                     ----     -------
+  Warning  FailedToRetrieveImagePullSecret  2m47s (x15001 over 13d)  kubelet  Unable to retrieve some image pull secrets (webplus-prod-docker-config); attempting to pull the image may not succeed.
+[root@si1ocpvinit01 ~]#
